@@ -2,7 +2,10 @@ const { Client, Intents, Collection } = require('discord.js');
 const { readdirSync } = require('fs');
 const Database = require('simplest.db');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES]});
-const { TOKEN, USER_ID, WHITELIST_CMDS, PREFIX, CHANNEL_NOTIFY, MONGO_STRING } = require('./config.json');
+const { USER_ID, WHITELIST_CMDS, PREFIX, CHANNEL_NOTIFY, DEV } = require('./config.json');
+
+require('dotenv').config();
+require('./napthe-api');
 
 client.commands = new Collection();
 client.PREFIX = PREFIX;
@@ -10,12 +13,11 @@ client.PREFIX = PREFIX;
 // MONGO
 const mongoose = require('mongoose');
 
-mongoose.connect(MONGO_STRING).then(() => {
+mongoose.connect(process.envMONGO_STRING).then(() => {
     console.log("Connected to databases!");
-    client.login(TOKEN, console.error);
+    client.login(process.env.TOKEN, console.error);
 });
 
-require('./napthe-api');
 
 module.exports.discord = client;
 
@@ -36,14 +38,14 @@ client.on('ready', () => {
 });
 
 client.on('channelCreate', channel => {
-    if(channel.name.startsWith("ticket-")) {
+    if(!DEV && channel.name.startsWith("ticket-")) {
         client.users.fetch(USER_ID).then(u => u.send(channel.name + " - New ticket!").catch(console.error)).catch(console.error);
     }
 });
 
 client.on('messageCreate', async message => {
     if(!message || !message.channel || !message.guild || message.author.bot) return;
-    if(message.author.id !== USER_ID && (CHANNEL_NOTIFY.indexOf(message.channelId) > -1
+    if(!DEV && message.author.id !== USER_ID && (CHANNEL_NOTIFY.indexOf(message.channelId) > -1
     || message.channel.name.startsWith("ticket-"))) client.users.fetch(USER_ID).then(u => u.send(message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : "")).catch(console.error));
 
     if(message.content.startsWith("#invites")) console.log("[" + new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh'}) + "] " + message.author.tag + " | " + message.content);
