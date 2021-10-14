@@ -13,7 +13,7 @@ client.PREFIX = PREFIX;
 // MONGO
 const mongoose = require('mongoose');
 
-mongoose.connect(process.envMONGO_STRING).then(() => {
+mongoose.connect(process.env.MONGO_STRING).then(() => {
     console.log("Connected to databases!");
     client.login(process.env.TOKEN, console.error);
 });
