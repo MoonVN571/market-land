@@ -12,8 +12,8 @@ module.exports = {
         > <a:nitroclassic:883188139437461524> Nitro Classic 90k VNĐ hoặc 4m5<a:owo:895874259132510269>/🥑**
 
         <a:nitro:883188390642745374> NITRO NĂM <a:nitro:883188390642745374>
-        > <a:nitroboost:883188103987212288> Nitro Boost: 1tr5 VNĐ 
-        > <a:nitroclassic:883188139437461524> Nitro Classic 750k VNĐ
+        > <a:nitroboost:883188103987212288> Nitro Boost: 1.500K VNĐ 
+        > <a:nitroclassic:883188139437461524> Nitro Classic 750K VNĐ
         `);
     }
 }
