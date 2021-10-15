@@ -56,7 +56,7 @@ client.on('messageDelete', async message => {
         let c = client.channels.cache.get("898449356577976330");
         c.name.split(" ").forEach(d => {
             if(!isNaN(d)) {
-                client.channels.cache.get("898449356577976330").setName(c.name.replace(d, +d - 1));
+                message.guild.channels.cache.get("898449356577976330").setName(c.name.replace(d, +d - 1));
             }
         });
     }
@@ -71,7 +71,7 @@ client.on('messageCreate', async message => {
         let c = client.channels.cache.get("898449356577976330");
         c.name.split(" ").forEach(d => {
             if(!isNaN(d)) {
-                client.channels.cache.get("898449356577976330").setName(c.name.replace(d, +d + 1));
+                message.guild.channels.cache.get("898449356577976330").setName(c.name.replace(d, +d + 1));
             }
         });
     }
