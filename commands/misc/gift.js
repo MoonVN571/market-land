@@ -34,10 +34,10 @@ module.exports = {
         if(rd > 960 && rd <= 980) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/spotify.png']});
         if(rd > 980 && rd <= 1000) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/netflix.png']});
         */
-        if(rd > 0 && rd <= 8000) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/mayman.png']});
-        if(rd > 8000 && rd <= 8010) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroclassic.png']});
-        if(rd > 8010 && rd <= 8011) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroboost.png']});
-        if(rd > 8011 && rd <= 8811) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/rd200.png']});
+        if(rd > 0 && rd <= 5000) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/mayman.png']});
+        if(rd > 5000 && rd <= 5010) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroclassic.png']});
+        if(rd > 5010 && rd <= 5011) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroboost.png']});
+        if(rd > 5011 && rd <= 8811) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/rd200.png']});
         if(rd > 8811 && rd <= 8911) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/spotify.png']});
         if(rd > 8911 && rd <= 10000) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/netflix.png']});
     }
