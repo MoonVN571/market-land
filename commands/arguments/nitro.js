@@ -1,6 +1,6 @@
 module.exports = {
-    name: "patreon",
-    aliases: ['ni'],
+    name: "nitro",
+    aliases: ['pan'],
     delete: true,
     
     async execute (client, message, args) {
