@@ -14,7 +14,7 @@ module.exports = {
 <:LogoMomo:884643756257722439> MoMo: 0348118256
 <:zalopaylogo:884644430387232788> ZaloPay: 034811825
 
-<:owocash:895873427230035988> | Thanh toán bằng <a:owo:895874259132510269>/🥑  thì give cho **<@857863782503153694>**
+**Lưu ý:** Thanh toán bằng <:owocash:895873427230035988> hoăc 🥑 thì give cho **<@857863782503153694>**
         `});
     }
 }
