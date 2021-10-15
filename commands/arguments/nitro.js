@@ -5,7 +5,7 @@ module.exports = {
     
     async execute (client, message, args) {
         return message.channel.send(`
-        <:spotifylogo:883188529570676747> **THÔNG TIN VỀ NITRO** <:spotifylogo:883188529570676747> 
+        <a:nitro:883188390642745374> **THÔNG TIN VỀ NITRO** <a:nitro:883188390642745374>
 
         <a:nitro:883188390642745374> NITRO THÁNG <a:nitro:883188390642745374>
         > <a:nitroboost:883188103987212288> Nitro Boost 170k VNĐ hoặc 8m5<a:owo:895874259132510269>/🥑**
