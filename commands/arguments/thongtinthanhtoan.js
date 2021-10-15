@@ -12,7 +12,7 @@ module.exports = {
 <:logovietcombank:884639990796140544> Vietcombank: 1015944000
 <:Logo_MB:884643617317199923> MB Bank: 0348118256
 <:LogoMomo:884643756257722439> MoMo: 0348118256
-<:zalopaylogo:884644430387232788> ZaloPay: 034811825
+<:zalopaylogo:884644430387232788> ZaloPay: 0348118256
 
 **Lưu ý:** Thanh toán bằng <:owocash:895873427230035988> hoăc 🥑 thì give cho **<@857863782503153694>**
         `});
