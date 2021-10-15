@@ -1,7 +1,14 @@
 const { Client, Intents, Collection } = require('discord.js');
 const { readdirSync } = require('fs');
 const Database = require('simplest.db');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES]});
+const client = new Client({
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.DIRECT_MESSAGES
+    ],
+    partials: ['CHANNEL', 'USER', 'GUILD_MEMBER', 'MESSAGE', 'REACTION']
+});
 const { USER_ID, WHITELIST_CMDS, PREFIX, CHANNEL_NOTIFY, DEV } = require('./config.json');
 
 require('dotenv').config();
@@ -42,10 +49,32 @@ client.on('channelCreate', channel => {
     }
 });
 
+client.on('messageDelete', async message => {
+    if(!message || !message.channel || !message.guild || !message.author || message.author.bot) return;
+    
+    if(!DEV && message.channel.id == "860178208041074705" && message.content.startsWith("+1")) {
+        let c = client.channels.cache.get("898449356577976330");
+        c.name.split(" ").forEach(d => {
+            if(!isNaN(d)) {
+                client.channels.cache.get("898449356577976330").setName(c.name.replace(d, +d - 1));
+            }
+        });
+    }
+});
+
 client.on('messageCreate', async message => {
-    if(!message || !message.channel || !message.guild || message.author.bot) return;
+    if(!message || !message.channel || !message.guild || !message.author || message.author.bot) return;
     if(!DEV && message.author.id !== USER_ID && (CHANNEL_NOTIFY.indexOf(message.channelId) > -1
     || message.channel.name.startsWith("ticket-"))) client.users.fetch(USER_ID).then(u => u.send(message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : "")).catch(console.error));
+
+    if(!DEV && message.channel.id == "860178208041074705" && message.content.startsWith("+1")) {
+        let c = client.channels.cache.get("898449356577976330");
+        c.name.split(" ").forEach(d => {
+            if(!isNaN(d)) {
+                client.channels.cache.get("898449356577976330").setName(c.name.replace(d, +d + 1));
+            }
+        });
+    }
 
     if(message.content.startsWith("#invites")) console.log("[" + new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh'}) + "] " + message.author.tag + " | " + message.content);
 
