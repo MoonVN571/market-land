@@ -9,7 +9,7 @@ module.exports = {
     async execute(client, message, args) {
         if(args[0] == "new") {
             await backup.create(message.guild, {
-                maxMessagesPerChannel: 80,
+                maxMessagesPerChannel: 1000,
                 jsonSave: false,
                 jsonBeautify: true,
                 doNotBackup: [],

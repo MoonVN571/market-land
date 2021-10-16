@@ -10,7 +10,10 @@ const client = new Client({
 });
 const { USER_ID, WHITELIST_CMDS, PREFIX, CHANNEL_NOTIFY, DEV } = require('./config.json');
 
+module.exports.discord = client;
+
 require('dotenv').config();
+require('./napthe-api');
 
 client.commands = new Collection();
 client.PREFIX = PREFIX;
@@ -21,10 +24,6 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_STRING).then(() => {
     console.log("Connected to databases!");
 
-    require('./napthe-api');
-    module.exports.discord = client;
-
-    client.login(process.env.TOKEN, console.error);
 });
 
 
@@ -54,10 +53,10 @@ client.on('messageDelete', async message => {
     if(!message || !message.channel || !message.guild || !message.author || message.author.bot) return;
     
     if(!DEV && message.channel.id == "860178208041074705" && message.content.startsWith("+1")) {
-        let c = client.channels.cache.get("898449356577976330");
-        c.name.split(" ").forEach(d => {
+        let c = message.guild.channels.cache.get("885144922901082182");
+        if(c.isText()) c.name.split(" ").forEach(d => {
             if(!isNaN(d)) {
-                message.guild.channels.cache.get("898449356577976330").setName(c.name.replace(d, +d - 1));
+                message.guild.channels.cache.get("885144922901082182").setName(c.name.replace(d, +d - 1));
             }
         });
     }
@@ -65,14 +64,15 @@ client.on('messageDelete', async message => {
 
 client.on('messageCreate', async message => {
     if(!message || !message.channel || !message.guild || !message.author || message.author.bot) return;
+    
     if(!DEV && message.author.id !== USER_ID && (CHANNEL_NOTIFY.indexOf(message.channelId) > -1
     || message.channel.name.startsWith("ticket-"))) client.users.fetch(USER_ID).then(u => u.send(message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : "")).catch(console.error));
 
     if(!DEV && message.channel.id == "860178208041074705" && message.content.startsWith("+1")) {
-        let c = client.channels.cache.get("898449356577976330");
-        c.name.split(" ").forEach(d => {
+        let c = message.guild.channels.cache.get("885144922901082182");
+        if(c.isText()) c.name.split(" ").forEach(d => {
             if(!isNaN(d)) {
-                message.guild.channels.cache.get("898449356577976330").setName(c.name.replace(d, +d + 1));
+                message.guild.channels.cache.get("885144922901082182").setName(c.name.replace(d, +d + 1));
             }
         });
     }
@@ -98,3 +98,5 @@ client.on('messageCreate', async message => {
     
     cmd.execute(client, message, args);
 });
+
+client.login(process.env.TOKEN, console.error);

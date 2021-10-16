@@ -5,6 +5,9 @@ module.exports = {
     name: "napthe",
 
     async execute (client, message, args) {
+        // WHITELISt
+        if(message.guildId !== NAPTHE.GUILD_ID) return;
+
         if (!args[0] || !args[1] || !args[2] || !args[3]) return message.reply({allowedMentions: {repliedUser:false},content:"Bạn phải cung cấp cú pháp hợp lệ! Cách sử dụng: " + client.PREFIX + "napthe [Tên nhà mạng] [Mệnh giá] [Số Thẻ] [Số Seri]"});
         
         if ((args[0] == "Viettel"

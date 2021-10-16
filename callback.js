@@ -20,11 +20,15 @@ app.post("/", async function (req, res) {
     let real_price = data.amount;
     let input_price = data.declared_value;
 
-    let bal = await balance.findOne({ });
-    if(!bal) await balance.create({money: 0 });
-    bal = await balance.findOne({ });
+    let bal = await balance.findOne({ guildId: NAPTHE.GUILD_ID });
+    if(!bal) await balance.create({ guldId: NAPTHE.GUILD_ID, balance: 0 });
+    bal = await balance.findOne({ guldId: NAPTHE.GUILD_ID });
 
-    bal.money += real_price - 2000;
+    let showBalance = parseInt(real_price - real_price * 0.02);
+
+    if(showBalance < 0) showBalance = 0;
+
+    bal.balance = bal.balance + showBalance;
     bal.save();
 
     res.send({Status:"Thành công", Message: "Đã trả về hệ thống"});
@@ -32,10 +36,10 @@ app.post("/", async function (req, res) {
     if(!client.channels.cache.get(cb.id)) return console.log("Unknown channel to send card status");
     client.channels.cache.get(cb.id).send({embeds: [{
         author: {
-            name: "THÔNG TIN TRẢ VỀ - " + taskID
+            name: "THÔNG TIN TRẢ VỀ"
         },
         footer:{
-            text: "dtsr11.com - API"
+            text: "dtsr11.com"
         },
         fields: [
             {
@@ -50,17 +54,17 @@ app.post("/", async function (req, res) {
             },
             {
                 name: "Mệnh Giá",
-                value: Intl.NumberFormat().format(input_price) + "VNĐ",
+                value: Intl.NumberFormat().format(input_price) + " VNĐ",
                 inline: true
             },
             {
                 name: "Nhận Được",
-                value: Intl.NumberFormat().format(parseInt(real_price - 2000)) + "VNĐ",
-                inline: false
+                value: Intl.NumberFormat().format(showBalance) + " VNĐ",
+                inline: true
             },
             {
-                name: "Trạng thái",
-                value: (data.Success ? "Gạch thành công!" : "Thẻ lỗi!"),
+                name: "Trạng Thái",
+                value: (data.Success ? "Thành công!" : "Thẻ lỗi!"),
                 inline: true
             },
             {

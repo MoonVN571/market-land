@@ -24,16 +24,7 @@ module.exports = {
         }
 
         let rd = getRandom(0, 10000);
-        if(WHITELIST_CMDS.indexOf(message.author.id) > -1 && rd > 5000 && rd <= 7999) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroboost.png']});
 
-        /*
-        if(rd > 1 && rd <= 905) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/mayman.png']});
-        if(rd > 905 && rd <= 919) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroclassic.png']});
-        if(rd > 919 && rd <= 920) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroboost.png']});
-        if(rd > 920 && rd <= 960) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/rd200.png']});
-        if(rd > 960 && rd <= 980) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/spotify.png']});
-        if(rd > 980 && rd <= 1000) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/netflix.png']});
-        */
         if(rd > 0 && rd <= 5300) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/mayman.png']});
         if(rd > 5300 && rd <= 5310) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroclassic.png']});
         if(rd > 5310 && rd <= 5311) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroboost.png']});
