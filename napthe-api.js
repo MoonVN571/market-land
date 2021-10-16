@@ -16,4 +16,4 @@ app.get("/", (req,res)=>{
     res.json({content:"Not supported!"});
 });
 const { NAPTHE } = require('./config.json');
-app.listen(NAPTHE.PORT, () => console.log("Web ready!"));
+app.listen(NAPTHE.PORT, () => console.log("success"));
