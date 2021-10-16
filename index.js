@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGO_STRING).then(() => {
     client.login(process.env.TOKEN, console.error);
 });
 
-module.exports.discord = client;
+module.exports = client;
 
 readdirSync('./commands/').forEach(dir => {
     readdirSync('./commands/' + dir + "/").forEach(pull => {

@@ -1,10 +1,11 @@
-const crypto = require("crypto-js")
+﻿const crypto = require("crypto-js")
 const express = require("express")
 const app = express.Router()
-const client = require("./index").discord;
+const client = require("./index");
 const { NAPTHE } = require('./config.json');
 const balance = require('./model/money-model');
 app.post("/", async function (req, res) {
+	console.log("post");
     let data = req.body
     let cb 
     try {
@@ -20,9 +21,9 @@ app.post("/", async function (req, res) {
     let real_price = data.amount;
     let input_price = data.declared_value;
 
-    let bal = await balance.findOne({ money });
-    if(!bal) await balance.create({money: 0 });
-    bal = await balance.findOne({ money });
+    let bal = await balance.findOne({});
+    if(!bal) await balance.create({ money: 0 });
+    bal = await balance.findOne({});
 
     bal.money += real_price - 2000;
     bal.save();
