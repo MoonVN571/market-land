@@ -25,12 +25,8 @@ module.exports = {
 
         let rd = getRandom(0, 10000);
         
-        if(rd > 0 && rd <= 7300) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/mayman.png']});
-        if(rd > 7300 && rd <= 7310) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroclassic.png']});
-        if(rd > 7310 && rd <= 7311) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroboost.png']});
-        if(rd > 7311 && rd <= 8311) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/rd200.png']});
-        if(rd > 8311 && rd <= 8811) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/spotify.png']});
-        if(rd > 8811 && rd <= 10000) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/netflix.png']});
+        if(rd > 0 && rd <= 10000) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/mayman.png']});
+       
     }
 }
 
