@@ -1,6 +1,5 @@
 const { Client, Intents, Collection } = require('discord.js');
 const { readdirSync } = require('fs');
-const Database = require('simplest.db');
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -12,7 +11,6 @@ const client = new Client({
 const { USER_ID, WHITELIST_CMDS, PREFIX, CHANNEL_NOTIFY, DEV } = require('./config.json');
 
 require('dotenv').config();
-require('./napthe-api');
 
 client.commands = new Collection();
 client.PREFIX = PREFIX;
@@ -22,10 +20,13 @@ const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_STRING).then(() => {
     console.log("Connected to databases!");
+
+    require('./napthe-api');
+    module.exports.discord = client;
+
     client.login(process.env.TOKEN, console.error);
 });
 
-module.exports.discord = client;
 
 readdirSync('./commands/').forEach(dir => {
     readdirSync('./commands/' + dir + "/").forEach(pull => {

@@ -20,9 +20,9 @@ app.post("/", async function (req, res) {
     let real_price = data.amount;
     let input_price = data.declared_value;
 
-    let bal = await balance.findOne({ money });
+    let bal = await balance.findOne({ });
     if(!bal) await balance.create({money: 0 });
-    bal = await balance.findOne({ money });
+    bal = await balance.findOne({ });
 
     bal.money += real_price - 2000;
     bal.save();

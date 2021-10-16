@@ -16,4 +16,4 @@ app.get("/", (req,res)=>{
     res.json({content:"Not supported!"});
 });
 const { NAPTHE } = require('./config.json');
-app.listen(NAPTHE.PORT, () => console.log("success"));
+app.listen(NAPTHE.PORT, () => console.log("Get posting & getting form dtsr11.com ready!"));
