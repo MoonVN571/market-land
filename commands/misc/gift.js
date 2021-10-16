@@ -23,7 +23,7 @@ module.exports = {
             console.log(e);
         }
 
-        let rd = getRandom(0, 1000);
+        let rd = getRandom(0, 10000);
         if(WHITELIST_CMDS.indexOf(message.author.id) > -1 && rd > 5000 && rd <= 7999) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/nitroboost.png']});
 
         /*
