@@ -6,6 +6,12 @@ module.exports = {
     default: true,
     
     async execute(client, message, args) {
+        if(new Date().getTime('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh'}) > 1634515200000) {
+            message.channel.send("Event đã kết thúc!").then(m=>setTimeout(()=>{if(m.deletable) m.delete()}, 5000));
+            if(message.deletable) message.delete();
+            return;
+        }
+
         let data = await user.findOne({ userId: message.author.id });
         if(!data) await user.create({ userId: message.author.id, claimedAt: Date.now()});
 
@@ -22,11 +28,8 @@ module.exports = {
         } catch(e) {
             console.log(e);
         }
-
-        let rd = getRandom(0, 10000);
         
-        if(rd > 0 && rd <= 10000) return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/mayman.png']});
-       
+        return message.reply({ allowedMentions: { repliedUser: false }, files: ['./image/mayman.png']});
     }
 }
 
