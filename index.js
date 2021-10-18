@@ -52,7 +52,7 @@ client.on('channelCreate', channel => {
 client.on('messageDelete', async message => {
     if(!message || !message.channel || !message.guild || !message.author || message.author.bot) return;
     
-    if(message.channel.id == "898443993447297124" && message.content.startsWith("+1")) {
+    if(message.channel.id == "860178208041074705" && message.content.startsWith("+1")) {
         let c = message.guild.channels.cache.get("885144922901082182");
         if(c.isVoice()) c.name.split(/ +/ig).forEach(async d => {
             if(!isNaN(d)) {
@@ -92,7 +92,7 @@ client.on('messageCreate', async message => {
     if(!DEV && message.author.id !== USER_ID && (CHANNEL_NOTIFY.indexOf(message.channelId) > -1
     || message.channel.name.startsWith("ticket-"))) client.users.fetch(USER_ID).then(u => u.send(message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : "")).catch(console.error));
 
-    if(message.channel.id == "898443993447297124" && message.content.startsWith("+1")) {
+    if(message.channel.id == "860178208041074705" && message.content.startsWith("+1")) {
         let c = message.guild.channels.cache.get("885144922901082182");
         if(c.isVoice()) c.name.split(/ +/ig).forEach(async d => {
             if(!isNaN(d)) {
