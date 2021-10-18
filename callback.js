@@ -21,7 +21,7 @@ app.post("/", async function (req, res) {
     let input_price = data.declared_value;
 
     let bal = await balance.findOne({ guildId: NAPTHE.GUILD_ID });
-    if(!bal) await balance.create({ guldId: NAPTHE.GUILD_ID, balance: 0 });
+    if(!bal) await balance.create({ guldId: NAPTHE.GUILD_ID, balance: 0, rose: 0 });
     bal = await balance.findOne({ guldId: NAPTHE.GUILD_ID });
 
     let showBalance = parseInt(real_price - real_price * 0.02);
@@ -29,6 +29,7 @@ app.post("/", async function (req, res) {
     if(showBalance < 0) showBalance = 0;
 
     bal.balance = bal.balance + showBalance;
+    bal.rose = real_price * 0.02;
     bal.save();
 
     res.send({Status:"Thành công", Message: "Đã trả về hệ thống"});

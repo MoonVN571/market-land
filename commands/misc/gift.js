@@ -1,6 +1,5 @@
 const {getRandom}= require('../../utils');
 const user = require('../../model/gift-model');
-const { WHITELIST_CMDS } = require('../../config.json');
 module.exports = {
     name: "gift",
     default: true,
