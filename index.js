@@ -65,10 +65,12 @@ client.on('messageDelete', async message => {
 client.on('messageCreate', async message => {
     if(!message || !message.channel || !message.guild || !message.author) return;
     
+    if(DEV) return;
+
     let textData = await autoR.findOne({ guildId: message.guildId });
     if(!message.author.bot && textData && textData.data) {
-        await textData.data.forEach(d => {
-            if(d.content == message.content || d.content == message.content.slice(PREFIX.length).toLowerCase()) {
+        if(message.author.id == USER_ID || WHITELIST_CMDS.indexOf(message.author.id) > -1) return await textData.data.forEach(d => {
+            if(d.content == message.content.toLowerCase() || message.content.startsWith(PREFIX) && d.content == message.content.slice(PREFIX.length || 0).toLowerCase()) {
                 message.channel.send(d.reply);
                 if(message.deletable) message.delete();
             }
@@ -85,14 +87,20 @@ client.on('messageCreate', async message => {
 });
 
 client.on('messageCreate', async message => {
-    if(!message || !message.channel || !message.guild || !message.author) return;
-
-    if(message.author.bot) return;
+    if(!message || !message.channel || !message.guild || !message.author || message.author.bot) return;
     
     if(!DEV && message.author.id !== USER_ID && (CHANNEL_NOTIFY.indexOf(message.channelId) > -1
-    || message.channel.name.startsWith("ticket-"))) client.users.fetch(USER_ID).then(u => u.send(message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : "")).catch(console.error));
+    || message.channel.name.startsWith("ticket-"))) {
+        client.users.fetch(USER_ID).then(u => u.send(message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : "")).catch(console.error));
+        client.channels.cache.get("900422916171268146").send({
+            embed: {
+                description: message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : ""),
+                color: "GREEN"
+            }
+        }).catch(console.error);
+    }
 
-    if(message.channel.id == "860178208041074705" && message.content.startsWith("+1")) {
+    if(!DEV && message.channel.id == "860178208041074705" && message.content.startsWith("+1")) {
         let c = message.guild.channels.cache.get("885144922901082182");
         if(c.isVoice()) c.name.split(/ +/ig).forEach(async d => {
             if(!isNaN(d)) {
@@ -114,7 +122,7 @@ client.on('messageCreate', async message => {
     if(!cmd) return;
     if(cmd.delete && message.deletable) message.delete();
 
-    if(message.author.id !== USER_ID && !cmd.default && WHITELIST_CMDS.indexOf(message.author.id) < 0) return;
+    if(!cmd.default && message.author.id !== USER_ID && WHITELIST_CMDS.indexOf(message.author.id) < 0) return;
 
     cmd.execute(client, message, args);
 });
