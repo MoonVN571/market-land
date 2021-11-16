@@ -1,4 +1,4 @@
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents, Collection, MessageActionRow, MessageButton } = require('discord.js');
 const { readdirSync } = require('fs');
 const client = new Client({
     intents: [
@@ -23,7 +23,6 @@ const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_STRING).then(() => {
     console.log("Connected to databases!");
-
 });
 
 
@@ -37,10 +36,62 @@ readdirSync('./commands/').forEach(dir => {
     });
 });
 
+const tickets = require('./model/tickets-model');
+
 client.on('ready', () => {
     console.log("Main ready!");
 
     client.user.setActivity("Market Land", {type: "WATCHING"});
+
+    client.guilds.cache.forEach(async g => {
+        let data = await tickets.findOne({ guildId: g.id });
+        if(!data) return;
+        if(!data.channelId || !data.messageId) return;
+
+        let channel = g.channels.cache.get(data.channelId);
+
+        channel?.messages.fetch(data.messageId).then(m => {
+            require('./tickets/sync')(m);
+        }).catch(console.error);
+
+        setTimeout(() => {
+            data.tickets?.forEach(async d => {
+                let channel = client.channels.cache.get(d.channelId);
+                if(!channel) return;
+                
+                channel?.messages.fetch(d.messageId).then(async m => {
+                    let compo = new MessageActionRow()
+                        .addComponents(
+                            new MessageButton()
+                                .setCustomId(d.channelId)
+                                .setStyle('DANGER')
+                                .setLabel('Huỷ phòng')
+                        );
+
+                    m.edit({components: [compo]});
+
+                    const collector = m.createMessageComponentCollector({ componentType: 'BUTTON' });
+
+                    collector.on('collect', async interaction => {
+                        if(interaction.customId == d.channelId) {
+                            await interaction.deferUpdate().catch(()=>{});
+                            
+                            if(WHITELIST_CMDS.indexOf(interaction.members.user.id) < 0) return;
+
+                            await interaction.channel.send("Ticket sẽ xoá trong vài giây tới!");
+            
+                            data.tickets.filter(data => d.channelId !== data.channelId);
+                            data.save();
+                            
+                            await interaction.channel.delete().catch(console.error); 
+                        }
+                    })
+
+                }).catch(console.error);
+            });
+        }, 5000);
+    });
+    
 });
 
 client.on('channelCreate', channel => {
