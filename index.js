@@ -79,7 +79,7 @@ client.on('ready', () => {
                             if(WHITELIST_CMDS.indexOf(interaction.members.user.id) < 0) return;
 
                             await interaction.channel.send("Ticket sẽ xoá trong vài giây tới!");
-            
+                            
                             data.tickets.filter(data => d.channelId !== data.channelId);
                             data.save();
                             
@@ -96,7 +96,7 @@ client.on('ready', () => {
 
 client.on('channelCreate', channel => {
     if(!DEV && channel.name.startsWith("ticket-")) {
-        client.users.fetch(USER_ID).then(u => u.send(channel.name + " - New ticket!").catch(console.error)).catch(console.error);
+        client.users.fetch(USER_ID).then(u => u.send(channel.toString() + " - New ticket!").catch(console.error)).catch(console.error);
     }
 });
 
@@ -121,7 +121,7 @@ client.on('messageCreate', async message => {
     let textData = await autoR.findOne({ guildId: message.guildId });
     if(!message.author.bot && textData && textData.data) {
         if(message.author.id == USER_ID || WHITELIST_CMDS.indexOf(message.author.id) > -1) return await textData.data.forEach(d => {
-            if(d.content == message.content.toLowerCase() || message.content.startsWith(PREFIX) && d.content == message.content.slice(PREFIX.length || 0).toLowerCase()) {
+            if(message.content.startsWith(PREFIX) && d.content == message.content.slice(PREFIX.length || 0).toLowerCase()) {
                 message.channel.send(d.reply);
                 if(message.deletable) message.delete();
             }
