@@ -1,11 +1,11 @@
 const axios = require("axios").default;
 const crypto = require("crypto-js");
-const { PREFIX, NAPTHE } = require('../../config.json');
+const { NAPTHE } = require('../../config.json');
 module.exports = {
     name: "napthe",
 
     async execute (client, message, args) {
-        return message.reply({content: "Hosting không hỗ trợ method này", allowedMentions: { repliedUser: false }});
+        // return message.reply({content: "Hosting không hỗ trợ method này", allowedMentions: { repliedUser: false }});
 
         if (!args[0] || !args[1] || !args[2] || !args[3]) return message.reply({allowedMentions: {repliedUser:false},content:"Bạn phải cung cấp cú pháp hợp lệ! Cách sử dụng: " + client.PREFIX + "napthe [Tên nhà mạng] [Mệnh giá] [Số Thẻ] [Số Seri]"});
         
@@ -60,7 +60,7 @@ module.exports = {
         let crypt = crypto.AES.encrypt(input_string, NAPTHE.HASH_KEY).toString();
 
         let obj = {
-            ApiKey: NAPTHE.API_KEY,
+            ApiKey: NAPTHE.NAP_CARD,
             Pin: args[2],
             Seri: args[3],
             CardType: type,

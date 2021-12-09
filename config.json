@@ -10,9 +10,10 @@
     "PREFIX": "!",
     "CHANNEL_NOTIFY": ["860178555777843230"],
     "NAPTHE": {
-        "PORT": 0,
-        "API_KEY": "",
-        "HASH_KEY": ""
+        "PORT": 2000,
+        "NAP_CARD": "d3fb1dd12863eaca3216b098e1218a65",
+        "MUA_CARD": "72978a676105333848ba8e583039b4de",
+        "HASH_KEY": "marketlandisdabezt"
     },
     "DEV": false
 }

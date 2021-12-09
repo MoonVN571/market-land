@@ -120,12 +120,15 @@ client.on('messageCreate', async message => {
 
     let textData = await autoR.findOne({ guildId: message.guildId });
     if(!message.author.bot && textData && textData.data) {
-        if(message.author.id == USER_ID || WHITELIST_CMDS.indexOf(message.author.id) > -1) return await textData.data.forEach(d => {
-            if(message.content.startsWith(PREFIX) && d.content == message.content.slice(PREFIX.length || 0).toLowerCase()) {
-                message.channel.send(d.reply);
+        if(message.author.id == USER_ID || WHITELIST_CMDS.indexOf(message.author.id) > -1) {
+            let respond = textData.data.filter(d => message.content.startsWith(PREFIX) && d.content == message.content.slice(PREFIX.length).toLowerCase())
+            
+            if(respond.length > 0) {
+                message.channel.send(respond[0].reply);
                 if(message.deletable) message.delete();
             }
-        });
+            
+        }
     }
 
     if(!(message.author.id == "557628352828014614")) return;
@@ -142,12 +145,12 @@ client.on('messageCreate', async message => {
     
     if(!DEV && message.author.id !== USER_ID && (CHANNEL_NOTIFY.indexOf(message.channelId) > -1
     || message.channel.name.startsWith("ticket-"))) {
-        client.users.fetch(USER_ID).then(u => u.send(message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : "")).catch(console.error));
-        client.channels.cache.get("900422916171268146").send({
-            embed: {
-                description: message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : ""),
+        client.users.fetch(USER_ID)?.then(u => u.send(message.channel.toString() + " | *" + message.author.tag + "* SAID: " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : "")).catch(console.error)).catch(()=>{});
+        if(message.content) client.channels.cache.get("900422916171268146").send({
+            embeds: [{
+                description: message.channel.toString() + " (" + message.channel.name + ") | *" + message.author.tag + "*   : " + message.content + (message.attachments.first() ? message.attachments.map(m => m?.proxyURL) : ""),
                 color: "GREEN"
-            }
+            }]
         }).catch(console.error);
     }
 
@@ -160,7 +163,7 @@ client.on('messageCreate', async message => {
         });
     }
 
-    if(message.content.startsWith("#invites")) console.log("[" + new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh'}) + "] " + message.author.tag + " | " + message.content);
+    // if(message.content.startsWith("#invites")) console.log("[" + new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh'}) + "] " + message.author.tag + " | " + message.content);
 
     if(!message.content.startsWith(PREFIX)) return;
 
